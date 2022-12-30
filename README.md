@@ -215,3 +215,88 @@ public static <E extends Comparable<E>> E max(Collection<E> c) ,,,
 
 
 
+<details markdown="4">
+<summary>
+
+#### ***item 31. 한정적 와일드카드를 사용해 API 유연성을 높이라.***</summary>  
+
+한정적 타입 : `Iterable<E extends Number>`  
+한정적 와일드 카드 : `Iterable<? extends E>`  
+
+
+### producer
+```
+생산자(producer) 매개변수에 와일드카드 타입 적용하여 유연성을 높일 수 있다.
+public void pushAll(Iterable<? extends E> src) {
+  for (E e : src)
+        push(e);
+}
+
+// Number 하위 타입을 넣을 수 있다.
+Stack<Number> numberStack = new Stack<>();
+
+Iterable<Integer> integers = Arrays.asList(3, 1, 4, 1, 5, 9);
+numberStack.pushAll(integers);
+
+Iterable<Double> doubles = Arrays.asList(3.1, 1.0, 4.0, 1.0, 5.0, 9.0);
+numberStack.pushAll(doubles);
+```
+
+### consumer
+```
+소비자(consumer) 매개변수에 와일드카드 타입 적용하여 유연성을 높일 수 있다.
+public void popAll(Collection<? super E> dst) {
+  while (!isEmpty())
+      dst.add(pop());
+}
+
+// 상위 타입을 허용한다. (Object는 Number의 super)
+Collection<Object> objects = new ArrayList<>();
+numberStack.popAll(objects);
+```
+
+
+### 와일드카드 활용 팁  
+메서드 선언에 타입 매개변수가 한번만 나오면 와일드카드로 대체하라.  
+- 한정적 타입이라면 한정적 와일드카드로  
+- 비한정적 타입이라면 비한정적 와일드카드로 es) List<?>  
+  
+**비한정적 와일드카드로 정의한 타입에는 null을 제외한 아무것도 넣을 수 없다.**  
+**consumer만 존재하는 경우 비한정적 타입을 사용할 수 있지만,  producer에서는 사용하기 좋지 않다.**
+
+
+
+### 타입 추론  
+- 타입을 명시하지 않아도 자바 컴파일러가 어떤 타입을 쓸지 알아내는 것.  
+
+> 타입을 추론하는 컴파일러의 기능  
+모든 인자의 가장 구체적인 공통 타입  
+제네릭 메서드와 타입 추론: 메서드 매개변수를 기반으로 타입 매개변수를 추론할 수 있다.  
+제네릭 클래스 생성자를 호출할 때 다이아몬드 연산자 <>를 사용하면 타입을 추론한다.  
+자바 컴파일러는 "타겟 타입"을 기반으로 호출하는 제네릭 메서드의 타입 매개변수를 추론한다.  
+-> 자바 8에서 "타겟 타입"이 "메서드의 인자"까지 확장되면서 이전에 비해 타입 추론이 강화되었다.
+
+`ArrayList<Box<Integer>> listOfIntegerBoxes = new ArrayList<>();`  
+`BoxExample.<Integer>addBox(10, listOfIntegerBoxes);` // 명시적 타입 인수  
+  
+```
+// Target Type을 보고 타입을 추론하게 된다.
+// 자바8에서부터 범위가 확장된다. (메서드의 인자 타입까지)
+List<String> stringlist = Collections.emptyList();
+List<Integer> integerlist = Collections.emptyList();
+
+
+BoxExample.processStringList(Collections.emptyList());
+private static void processStringList(List<String> stringList) {} // 알아서 타입 추론해준다.
+```
+</details>
+
+
+
+
+
+
+
+
+
+
