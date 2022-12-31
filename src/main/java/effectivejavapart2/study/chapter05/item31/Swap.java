@@ -1,8 +1,5 @@
 package effectivejavapart2.study.chapter05.item31;
 
-import me.whiteship.chapter05.item31.exmaple.Box;
-import me.whiteship.chapter05.item31.exmaple.IntegerBox;
-
 import java.util.Arrays;
 import java.util.List;
 
