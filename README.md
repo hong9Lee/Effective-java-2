@@ -67,6 +67,23 @@ s.addAll(List.of("틱", "탁탁", "펑"));
 
 
 
+<details markdown="2">
+<summary>
+
+#### ***item 19. 상속을 고려해 설계하고 문서화하라. 그러지 않았다면 상속을 금지하라.***</summary>  
+
+
+상속용 클래스는 내부 구현을 문서로 남겨야 한다.  
+- @implSpec을 사용할 수 있다.  
+  
+내부 동작 중간에 끼어들 수 있는 훅(hook)을 잘 선별하여 Protected 메서드로 공개해야 한다.  
+상속용으로 설계한 클래스는 배포 전에 반드시 하위 클래스를 만들어 검증해야 한다.  
+상속용 클래스의 생성자는 재정의 가능한 메서드를 호출해서는 안된다.  
+- Cloneable과 Serializable을 구현할때 조심해야 한다.  
+상속용으로 설계한 클래스가 아니라면 상속을 금지한다.  
+- final 클래스 또는 Private 생성자.  
+
+</details>
   
 
 
@@ -144,6 +161,9 @@ public class Stack<E> {
 다수의 타입으로 한정할 수 있다. 이때 클래스 타입을 가장 먼저 선언해야 한다.  
 - `<E extends Number & Serializable>` 선언할 제네릭 타입은 Integer와 Number를 모두 상속 또는 구현한 타입이어야 한다.  
 </details>
+
+
+
 
 
 
