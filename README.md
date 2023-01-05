@@ -88,6 +88,81 @@ s.addAll(List.of("틱", "탁탁", "펑"));
 
 
 
+
+
+<details markdown="2">
+<summary>
+
+#### ***item 20. 추상 클래스보다 인터페이스를 우선하라.***</summary>  
+
+자바 8부터 인터페이스도 ***디폴트 메서드***를 제공할 수 있다.  
+기존 클래스도 손쉽게 새로운 인터페이스를 구현해 넣을 수 있다.  
+인터페이스는 믹스인(mixin) 정의에 안성맞춤이다. (선택적인 기능 추가)  
+계층구조가 없는 타입 프레임워크를 만들 수 있다.  
+래퍼 클래스와 함께 사용하면 인터페이스는 기능을 향상 시키는 안전하고 강력한 수단이 된다.  
+구현이 명백한 것은 인터페이스의 디폴트 메서드를 사용해 프로그래머의 일감을 덜어 줄 수 있다.  
+
+```
+// 사용 가능한 경우엔 default나 static을 사용하여 인터페이스를 계속 진화시킬 수 있다.
+public interface TimeClient {
+
+default ZonedDateTime getZonedDateTime(String zoneString) {
+  return ZonedDateTime.of(getLocalDateTime(), getZonedId(zoneString));
+}
+
+static ZoneId getZonedId(String zoneString) {
+  try {
+    return ZoneId.of(zoneString);
+  ,,,
+```
+
+
+#### 인터페이스와 추상 골격 클래스  
+  
+인터페이스와 추상 클래스의 장점을 모두 취할 수 있다.  
+- 인터페이스 - 디폴트 메서드 구현  
+- 추상 골격 클래스 - 나머지 메서드 구현  
+- 템플릿 메서드 패턴  
+다중 상속을 시뮬레이트 할 수 있다.  
+골격 구현은 상속용 클래스이다.  
+
+```
+public class MyCat extends AbstractCat implements Flyable {
+
+    private MyFlyable myFlyable = new MyFlyable();
+    
+    
+    @Override
+    public void fly() {
+        this.myFlyable.fly();
+    }
+    
+    ,,,
+    
+    private class MyFlyable extends AbstractFlyable {
+        @Override
+        public void fly() {
+            System.out.println("날아라.");
+        }
+    }
+```
+
+#### 템플릿 메서드 패턴  
+알고리즘 구조를 서브 클래스가 확장할 수 있도록 템플릿으로 제공하는 방법.  
+- 추상 클래스는 템플릿을 제공하고 하위 클래스는 구체적인 알고리즘을 제공한다.  
+
+
+
+
+</details>
+
+
+
+
+
+
+
+
 <details markdown="2">
 <summary>
 
