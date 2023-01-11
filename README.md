@@ -160,6 +160,42 @@ public class MyCat extends AbstractCat implements Flyable {
 
 
 
+<details markdown="3">
+<summary>
+
+#### ***item 21. 인터페이스는 구현하는 쪽을 생각해 설계하라.***</summary>  
+
+기존 인터페이스에 디폴트 메서드 구현을 추가하는 것은 위험한 일이다.  
+- 디폴트 메서드는 구현 클래스에 대해 아무것도 모른 채 합의 없이 무작정 "삽입" 될 뿐이다.  
+- 디폴트 메서드는 기존 구현체에 런타임 오류를 일으킬 수 있다.  
+인터페이스를 설계할 때는 세심한 주의를 기울여야 한다.  
+- 서로 다른 방식으로 최소한 세 가지는 구현을 해보자.  
+
+#### ConcurrentModificationException  
+현재 바뀌면 안되는 것을 수정할 때 발생하는 예외  
+- List.of 로 만들어진 List는 ImmutableCollections으로 만들어졌기 때문에 요소를 변경할 수 없다.  
+- collection을 for문을 사용하여 순회하는 중에는 remove로 제거하지말고 이터레이터, 인덱스, removeIf 등의 방법을 사용하여 요소를 제거할 수 있다.
+
+```
+// 이터레이터의 remove 사용하기
+for (Iterator<Integer> iterator = numbers.iterator(); iterator.hasNext();) {
+  Integer integer = iterator.next();
+  if(integer == 3) {
+    iterator.remove();
+  }
+}
+
+// 인덱스 사용하기
+for (int i = 0; i < numbers.size() ; i++) {
+if (numbers.get(i) == 3) {
+    numbers.remove(numbers.get(i));
+  }
+}
+
+// removeIf 사용하기
+numbers.removeIf(number -> number == 3);
+```
+</details>
 
 
 
