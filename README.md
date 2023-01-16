@@ -218,15 +218,50 @@ numbers.removeIf(number -> number == 3);
 `특정한 함수에서만 사용하는 상수라면 해당 클래스로 옮겨서 사용한다.`  
 `공용으로 사용되는 상수라면 상수 유틸리티 클래스로 옮겨서 사용한다.`  
 `자바7 이후 버전부터 _는 숫자 리터럴의 어디에도 등장할 수 있다. 이로 인해 숫자를 끊어 읽을 수 있게 되어 가독성을 향상 시킬 수 있다. `  
-
 </details>
 
 
 
+<details markdown="3">
+<summary>
+
+#### ***item 23. 태그 달린 클래스보다는 클래스 계층 구조를 활용하라.***</summary>  
+  
+  
+태그 달린 클래스 : 그 클래스가 가지고 있는 필드중의 일부가 클래스의 구체적인 타입을 나타내는 경우.  
+- 쓸데없는 코드가 많다.  
+- 가독성이 나쁘다.  
+- 메모리도 많이 사용한다.  
+- 필드를 final로 선언하려면 불필요한 필드까지 초기화해야 한다.  
+- 인스턴스 타입만으로는 현재 나타내는 의미를 알 길이 없다.  
+
+#### 클래스 계층 구조로 바꾸면 모든 단점을 해결할 수 있다.  
 
 
 
+`Shape이라는 태그다 달린 Figure 클래스`  
+`하나의 클래스에 여러가지 기능들을 담고 있는 문제가 있다`
+```
+class Figure {
+    enum Shape { RECTANGLE, CIRCLE, SQUARE };
+    final Shape shape;
+  
+    Figure(double radius) {
+        shape = Shape.CIRCLE;
+        this.radius = radius;
+    }
+    ,,,   
+```
 
+`상속을 통한 계층구조로 변환한다`  
+```
+class Rectangle extends Figure {
+  
+  @Override double area() { return length * width; }
+  ,,,
+}  
+```
+</details>
 
 
 
