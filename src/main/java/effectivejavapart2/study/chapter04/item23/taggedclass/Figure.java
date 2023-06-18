@@ -33,6 +33,7 @@ class Figure {
     }
 
     double area() {
+        /*
         switch(shape) {
             case RECTANGLE, SQUARE:
                 return length * width;
@@ -41,5 +42,8 @@ class Figure {
             default:
                 throw new AssertionError(shape);
         }
+
+         */
+        return 0.0d;
     }
 }
