@@ -265,6 +265,32 @@ class Rectangle extends Figure {
 
 
 
+<details markdown="3">
+<summary>
+
+#### ***item 26. 로 타입은 사용하지 마라.***</summary>  
+
+로 타입: List  
+제네릭 타입: List<E>  
+매개변수화 타입: List<String>  
+타입 매개변수: E  
+실제 타입 매개변수: String  
+한정적 타입 매개변수: List<E extends Number>  
+비한정적 와일드카드 타입: Class<?>  
+한정적 와일드카드 타입: Class<? extends Annotation>  
+
+
+
+
+
+
+
+</details>
+
+
+
+
+
 
 
 <details markdown="2">
